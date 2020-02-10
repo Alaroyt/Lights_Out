@@ -1,0 +1,16 @@
+C:\Users\cd\Desktop\XDZH\bin\Debug\Lights_Out.exe.config
+C:\Users\cd\Desktop\XDZH\bin\Debug\Lights_Out.exe
+C:\Users\cd\Desktop\XDZH\bin\Debug\Lights_Out.pdb
+C:\Users\cd\Desktop\XDZH\obj\Debug\Lights_Out.csprojResolveAssemblyReference.cache
+C:\Users\cd\Desktop\XDZH\obj\Debug\Lights_Out.MainForm.resources
+C:\Users\cd\Desktop\XDZH\obj\Debug\Lights_Out.csproj.GenerateResource.Cache
+C:\Users\cd\Desktop\XDZH\obj\Debug\Lights_Out.exe
+C:\Users\cd\Desktop\XDZH\obj\Debug\Lights_Out.pdb
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\bin\Debug\Lights_Out.exe.config
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\bin\Debug\Lights_Out.exe
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\bin\Debug\Lights_Out.pdb
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\obj\Debug\Lights_Out.csprojResolveAssemblyReference.cache
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\obj\Debug\Lights_Out.MainForm.resources
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\obj\Debug\Lights_Out.csproj.GenerateResource.Cache
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\obj\Debug\Lights_Out.exe
+C:\Users\cd\Documents\SharpDevelop Projects\Lights_Out\obj\Debug\Lights_Out.pdb
