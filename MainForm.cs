@@ -113,15 +113,6 @@ namespace Lights_Out
 				new Point(temp.X, temp.Y - _SizeOfSquare),
 			};
 			
-			//Проверка на реальность соседних боксов (не выходят ли координаты за пределы игрового поля)
-//			List<Point> exploredPoints = new List<Point>();
-//			foreach (var el in ExistingBox) {
-//				foreach (var el2 in pointsNearPictureBox) {
-//					if (el.Value == el2)
-//						exploredPoints.Add(el2);
-//				}
-//			}
-			
 			//Индексы боксов, цвет которых будет изменен
 			List<int> index = new List<int>();
 			foreach (var el in ExistingBox) {
