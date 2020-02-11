@@ -34,6 +34,7 @@ namespace Lights_Out
 				else
 					_SizeOfSquare = 40;
 			}
+			
 			MaximumSize = new Size(((N + 1) * _SizeOfSquare) - _SizeOfSquare / 2, ((1 + N) * _SizeOfSquare));
 			MinimumSize = new Size(((N + 1) * _SizeOfSquare) - _SizeOfSquare / 2, ((1 + N) * _SizeOfSquare));
 			
@@ -172,7 +173,7 @@ namespace Lights_Out
 			try {
 				if (textBox2.Text == "")
 					textBox2.Text = "0";
-				if (int.Parse(textBox1.Text) < 25 & int.Parse(textBox1.Text) > 3) {
+				if (int.Parse(textBox1.Text) <= 25 & int.Parse(textBox1.Text) > 3) {
 					if (int.Parse(textBox2.Text) < (int.Parse(textBox1.Text) * int.Parse(textBox1.Text) + 1)) {
 						_genmap(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
 					} else {
@@ -181,7 +182,7 @@ namespace Lights_Out
 					}
 				} else {
 					textBox1.Text = "";
-					throw new Exception("N должно быть больше 3 и меньше 10");
+					throw new Exception("N должно быть больше 3 и меньше 25");
 				}
 			} catch (Exception ex) {
 				MessageBox.Show(ex.Message);
