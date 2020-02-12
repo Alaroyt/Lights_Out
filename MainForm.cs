@@ -15,10 +15,11 @@ namespace Lights_Out
 		Dictionary <int,Point> ExistingBox;
 		Dictionary <int,int> HachCode_OfBox;
 		int _Widht = 600, _Height = 600, _SizeOfSquare = 60;
+		
+		const int _maxWidht = 700;
 		public MainForm()
 		{
 			InitializeComponent();
-			
 		}
 		
 		void StartGameButton(object sender, EventArgs e)
@@ -26,7 +27,7 @@ namespace Lights_Out
 			try {
 				if (textBox2.Text == "")
 					textBox2.Text = "0";
-				if (int.Parse(textBox1.Text) <= 25 & int.Parse(textBox1.Text) > 3) {
+				if (int.Parse(textBox1.Text) <= 100 & int.Parse(textBox1.Text) > 3) {
 					if (int.Parse(textBox2.Text) < (int.Parse(textBox1.Text) * int.Parse(textBox1.Text) + 1)) {
 						_Genmap(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
 					} else {
@@ -35,7 +36,7 @@ namespace Lights_Out
 					}
 				} else {
 					textBox1.Text = "";
-					throw new Exception("N должно быть больше 3 и меньше 26");
+					throw new Exception("N должно быть больше 3 и меньше 101");
 				}
 			} catch (Exception ex) {
 				MessageBox.Show(ex.Message);
@@ -48,7 +49,7 @@ namespace Lights_Out
 			
 			if (N >= 10) {
 				if (N >= 15)
-					_SizeOfSquare = 30;
+					_SizeOfSquare = (_maxWidht / N);
 				else
 					_SizeOfSquare = 40;
 			}
@@ -123,10 +124,10 @@ namespace Lights_Out
 		void _MyClick(object sender, EventArgs e)
 		{
 			
-			if (_YouWin()) {
-				MessageBox.Show("You win", "Congratulations", MessageBoxButtons.OK);
-				Close();
-			}
+//			if (_YouWin()) {
+//				MessageBox.Show("You win", "Congratulations", MessageBoxButtons.OK);
+//				Close();
+//			}
 			
 			Text = name + score++;
 			

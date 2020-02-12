@@ -116,7 +116,7 @@ namespace Lights_Out
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(117, 23);
 			this.label4.TabIndex = 6;
-			this.label4.Text = "(4-25)";
+			this.label4.Text = "(4-100)";
 			// 
 			// label5
 			// 
@@ -125,14 +125,14 @@ namespace Lights_Out
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(117, 23);
 			this.label5.TabIndex = 7;
-			this.label5.Text = "(0-N*N)";
+			this.label5.Text = "(1-N*N)";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-			this.ClientSize = new System.Drawing.Size(466, 363);
+			this.ClientSize = new System.Drawing.Size(481, 296);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.textBox2);
