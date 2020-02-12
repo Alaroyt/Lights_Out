@@ -8,6 +8,9 @@ namespace Lights_Out
 {
 	public partial class MainForm : Form
 	{
+		int score = 1;
+		const string name = "Количество ходов: ";
+		
 		List<int> ind;
 		Dictionary <int,Point> ExistingBox;
 		Dictionary <int,int> HachCode_OfBox;
@@ -17,37 +20,50 @@ namespace Lights_Out
 			InitializeComponent();
 			
 		}
-
-		bool LightOn(int p)
+		
+		void StartGameButton(object sender, EventArgs e)
 		{
-			foreach (int el in ind) {
-				if (p == el)
-					return true;
+			try {
+				if (textBox2.Text == "")
+					textBox2.Text = "0";
+				if (int.Parse(textBox1.Text) <= 25 & int.Parse(textBox1.Text) > 3) {
+					if (int.Parse(textBox2.Text) < (int.Parse(textBox1.Text) * int.Parse(textBox1.Text) + 1)) {
+						_Genmap(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
+					} else {
+						textBox2.Text = "";
+						throw new Exception("Количество включенных ламп не может превышать N*N");
+					}
+				} else {
+					textBox1.Text = "";
+					throw new Exception("N должно быть больше 3 и меньше 26");
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(ex.Message);
 			}
-			return false;
 		}
-		void _genmap(int N, int count)
+		
+		void _Genmap(int N, int count)
 		{	
+			Controls.Clear();
+			
 			if (N >= 10) {
 				if (N >= 15)
-					_SizeOfSquare=30;
+					_SizeOfSquare = 30;
 				else
 					_SizeOfSquare = 40;
 			}
 			
-			MaximumSize = new Size(((N + 1) * _SizeOfSquare) - _SizeOfSquare / 2, ((1 + N) * _SizeOfSquare));
-			MinimumSize = new Size(((N + 1) * _SizeOfSquare) - _SizeOfSquare / 2, ((1 + N) * _SizeOfSquare));
+			//Размеры формы
+			ClientSize = new Size((N) * _SizeOfSquare, (N) * _SizeOfSquare);
 			
+			MaximumSize = new Size(Width, Height);
+			MinimumSize = new Size(Width, Height);
 			
-			Controls.Clear();
-			
+			//Размеры сетки
 			_Widht = _SizeOfSquare * N;
 			_Height = _SizeOfSquare * N;
 			
-			Height = (int)(_Height * 1.3);
-			Width = (int)(_Widht * 1.2);
-			
-			//Поля
+			//Сетка
 			for (int i = 0; i <= _Height / _SizeOfSquare; i++) {
 				PictureBox field = new PictureBox();
 				field.Size = new Size(_Widht, 1);
@@ -68,12 +84,12 @@ namespace Lights_Out
 			Random rnd = new Random();
 			for (int i = 1; i <= count; i++) {
 				int temp = rnd.Next(0, N * N);
-				if (LightOn(temp))
+				if (_LightOn(temp))
 					i--;
 				ind.Add(temp);
 			}
 			
-			//Создание пикчюрБоксов
+			//пикчюрБоксы
 			
 			//ХэшКод всех пикчюрбоксов (нужно чтобы вычислять на какой нажали) (<Код><Номер>)
 			HachCode_OfBox = new Dictionary<int,int>();
@@ -89,11 +105,11 @@ namespace Lights_Out
 					field.Size = new Size(_SizeOfSquare, _SizeOfSquare);
 					field.Location = new Point(i * _SizeOfSquare, j * _SizeOfSquare);
 					
-					if (!LightOn(p))
-						field.BackColor = Color.Lime;
+					if (!_LightOn(p))
+						field.BackColor = Color.Transparent;
 					else
-						field.BackColor = Color.Azure;
-					field.Click += (MyClick);
+						field.BackColor = Color.DeepSkyBlue;
+					field.Click += (_MyClick);
 					Controls.Add(field);
 					
 					ExistingBox.Add(Controls.Count - 1, new Point(i * _SizeOfSquare, j * _SizeOfSquare));
@@ -102,8 +118,44 @@ namespace Lights_Out
 			}
 		}
 
-		int[] ExistingPictureBoxs(Point temp)
+		
+
+		void _MyClick(object sender, EventArgs e)
 		{
+			
+			if (_YouWin()) {
+				MessageBox.Show("You win", "Congratulations", MessageBoxButtons.OK);
+				Close();
+			}
+			
+			Text = name + score++;
+			
+			//индекс пикчюрбокса, который был нажат
+			int indexOfPictureBox = _WhichPictureWasClicked(sender.GetHashCode());
+			
+			//координаты пикчюрбокса который был нажат
+			Point locationOfPictureBox = new Point(0, 0);
+			foreach (var el in ExistingBox) {
+				if (indexOfPictureBox == el.Key)
+					locationOfPictureBox = el.Value;
+			}
+			
+			//вычисление индексов пикчюрбоксов рядом с нажатым пикчюрбоксом
+			int[] IndexSquare = _ExistingPictureBoxs(locationOfPictureBox);
+			
+			//смена цвета
+			foreach (var el in IndexSquare) {
+				if (Controls[el].BackColor == Color.Transparent) {
+					Controls[el].BackColor = Color.DeepSkyBlue;
+				} else {
+					Controls[el].BackColor = Color.Transparent;
+				}
+			}
+		}
+		
+		int[] _ExistingPictureBoxs(Point temp)
+		{
+			
 			//Координаты всех соседних боксов
 			Point[] pointsNearPictureBox = {
 				new Point(temp.X, temp.Y),
@@ -134,52 +186,27 @@ namespace Lights_Out
 			}
 			return 0;
 		}
-		void MyClick(object sender, EventArgs e)
+
+		bool _YouWin()
 		{
-			//индекс текстбокса, который был нажат
-			int indexOfPictureBox = _WhichPictureWasClicked(sender.GetHashCode());
-			
-			//координаты текстбокса который был нажат
-			Point locationOfPictureBox = new Point(0, 0);
-			foreach (var el in ExistingBox) {
-				if (indexOfPictureBox == el.Key)
-					locationOfPictureBox = el.Value;
+			foreach (var el in HachCode_OfBox) {
+				if (Controls[el.Value].BackColor == Color.DeepSkyBlue)
+					return false;
 			}
-			
-			//вычисление индексов текстбоксов рядом с нажатым текстбоксом
-			int[] IndexSquare = ExistingPictureBoxs(locationOfPictureBox);
-			
-			//смена цвета
-			foreach (var el in IndexSquare) {
-				if (Controls[el].BackColor == Color.Lime) {
-					Controls[el].BackColor = Color.Azure;
-				} else {
-					Controls[el].BackColor = Color.Lime;
-				}
-			}
+			return true;
 		}
 
-		void Button1Click(object sender, EventArgs e)
+		//
+		bool _LightOn(int p)
 		{
-			try {
-				if (textBox2.Text == "")
-					textBox2.Text = "0";
-				if (int.Parse(textBox1.Text) <= 25 & int.Parse(textBox1.Text) > 3) {
-					if (int.Parse(textBox2.Text) < (int.Parse(textBox1.Text) * int.Parse(textBox1.Text) + 1)) {
-						_genmap(int.Parse(textBox1.Text), int.Parse(textBox2.Text));
-					} else {
-						textBox2.Text = "";
-						throw new Exception("Количество включенных ламп не может превышать N*N");
-					}
-				} else {
-					textBox1.Text = "";
-					throw new Exception("N должно быть больше 3 и меньше 25");
-				}
-			} catch (Exception ex) {
-				MessageBox.Show(ex.Message);
+			foreach (int el in ind) {
+				if (p == el)
+					return true;
 			}
+			return false;
 		}
-		void MainFormKeyDown(object sender, KeyEventArgs e)
+		
+		void FormKeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape) {
 				Close();
